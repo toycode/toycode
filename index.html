@@ -1,0 +1,491 @@
+<!DOCTYPE html>
+<html lang="zh-CN" class="scroll-smooth">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ToyCode - 既能写程序，也能写游戏，开发像搭积木那么简单！</title>
+    <!-- SEO Meta Tags -->
+    <meta name="description" content="ToyCode 专为 C++ 初学者、个人开发者和独立创作者设计。通过简洁的属性语法、自动资源管理和直观事件绑定，既能开发桌面UI程序，也能制作 2D 游戏。">
+    <meta name="keywords" content="ToyCode, C++引擎, 游戏引擎, UI框架, SDL3, 2D游戏开发, 跨平台开发">
+    <link rel="canonical" href="https://toycode.github.io/">
+    
+    <!-- Open Graph / Social Sharing -->
+    <meta property="og:type" content="website">
+    <meta property="og:title" content="ToyCode - 既能写程序，也能写游戏，开发像搭积木那么简单！">
+    <meta property="og:description" content="ToyCode 专为 C++ 初学者、个人开发者和独立创作者设计，大幅降低桌面程序与 2D 游戏开发门槛。">
+    <meta property="og:site_name" content="ToyCode">
+
+    <!-- JSON-LD Structured Data -->
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "SoftwareApplication",
+      "name": "ToyCode",
+      "operatingSystem": "Windows, Linux, macOS, Android, WebAssembly",
+      "applicationCategory": "DeveloperApplication",
+      "description": "一套既能写程序，也能写游戏的轻量级 C++ 引擎，基于 SDL3 构建。",
+      "programmingLanguage": "C++"
+    }
+    </script>
+
+    <!-- Tailwind CSS CDN -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        microsoft: {
+                            blue: '#005fb8',
+                            blueHover: '#004c99',
+                            dark: '#1b1b1b',
+                            gray: '#f3f3f3',
+                            border: '#e5e5e5'
+                        }
+                    }
+                }
+            }
+        }
+    </script>
+    <!-- FontAwesome for Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Segoe+UI:wght@300;400;500;600;700&display=swap');
+        body {
+            font-family: 'Segoe UI', -apple-system, BlinkMacSystemFont, "Helvetica Neue", Arial, sans-serif;
+        }
+    </style>
+</head>
+<body class="bg-white text-gray-800 antialiased selection:bg-microsoft-blue selection:text-white">
+
+    <!-- 顶部导航栏 -->
+    <header class="sticky top-0 z-50 bg-white/80 backdrop-blur-md border-b border-microsoft-border">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-16 flex items-center justify-between">
+            <div class="flex items-center space-x-8">
+                <a href="#" class="flex items-center space-x-3 group">
+                    <div class="w-9 h-9 bg-microsoft-blue rounded flex items-center justify-center text-white font-bold text-xl shadow-sm transition-transform group-hover:scale-105">
+                        T
+                    </div>
+                    <span class="text-xl font-semibold tracking-tight text-gray-900">ToyCode</span>
+                </a>
+                <nav class="hidden md:flex items-center space-x-6 text-sm font-medium text-gray-600">
+                    <a href="#features" class="hover:text-microsoft-blue transition-colors">核心特性</a>
+                    <a href="#sandbox" class="hover:text-microsoft-blue transition-colors">代码示例</a>
+                    <a href="#scenarios" class="hover:text-microsoft-blue transition-colors">应用场景</a>
+                    <a href="#docs" class="hover:text-microsoft-blue transition-colors">开发指南</a>
+                </nav>
+            </div>
+            <div class="flex items-center space-x-4">
+                <a href="#sandbox" class="hidden sm:inline-flex items-center justify-center px-4 py-2 text-sm font-medium text-gray-700 bg-microsoft-gray hover:bg-gray-200 rounded transition-colors">
+                    <i class="fa-solid fa-code mr-2"></i> 快速上手
+                </a>
+                <a href="#download" class="inline-flex items-center justify-center px-5 py-2 text-sm font-medium text-white bg-microsoft-blue hover:bg-microsoft-blueHover rounded shadow-sm transition-colors">
+                    <i class="fa-solid fa-download mr-2"></i> 获取 SDK
+                </a>
+            </div>
+        </div>
+    </header>
+
+    <!-- Hero 首屏区域 -->
+    <section class="relative overflow-hidden bg-gradient-to-b from-gray-50 to-white pt-20 pb-24 border-b border-microsoft-border">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="grid grid-cols-1 lg:grid-cols-12 gap-12 items-center">
+                <!-- 左侧文案 -->
+                <div class="lg:col-span-7 text-center lg:text-left space-y-6">
+                    <div class="inline-flex items-center space-x-2 px-3 py-1 bg-blue-50 border border-blue-100 rounded-full text-microsoft-blue text-xs font-semibold uppercase tracking-wider">
+                        <span class="w-2 h-2 rounded-full bg-microsoft-blue animate-pulse"></span>
+                        <span>基于 SDL3 构建的高性能轻量级引擎</span>
+                    </div>
+                    <h1 class="text-4xl sm:text-5xl lg:text-6xl font-bold text-gray-900 tracking-tight leading-[1.15]">
+                        既能写程序，也能写游戏，<br class="hidden sm:inline">开发像搭积木那么简单！
+                    </h1>
+                    <p class="text-lg sm:text-xl text-gray-600 max-w-2xl mx-auto lg:mx-0 font-light leading-relaxed">
+                        ToyCode 专为 C++ 初学者、个人开发者和独立创作者设计。通过简洁的属性语法、自动资源管理和直观的事件绑定，让您专注于创意本身。
+                    </p>
+                    <div class="flex flex-col sm:flex-row items-center justify-center lg:justify-start space-y-3 sm:space-y-0 sm:space-x-4 pt-4">
+                        <a href="#download" class="w-full sm:w-auto inline-flex items-center justify-center px-8 py-3.5 text-base font-medium text-white bg-microsoft-blue hover:bg-microsoft-blueHover rounded shadow transition-all hover:translate-y-[-1px]">
+                            立即下载 SDK <i class="fa-solid fa-arrow-right ml-2"></i>
+                        </a>
+                        <a href="#sandbox" class="w-full sm:w-auto inline-flex items-center justify-center px-8 py-3.5 text-base font-medium text-gray-700 bg-white border border-gray-300 hover:bg-gray-50 rounded shadow-sm transition-all">
+                            查看代码示例
+                        </a>
+                    </div>
+                    <!-- 环境标签 -->
+                    <div class="pt-6 flex flex-wrap items-center justify-center lg:justify-start gap-4 text-xs text-gray-500 font-medium">
+                        <span class="flex items-center"><i class="fa-solid fa-check text-green-600 mr-1.5"></i> Visual Studio 2026</span>
+                        <span class="flex items-center"><i class="fa-solid fa-check text-green-600 mr-1.5"></i> C++17 标准</span>
+                        <span class="flex items-center"><i class="fa-solid fa-check text-green-600 mr-1.5"></i> SDL3 底层驱动</span>
+                    </div>
+                </div>
+
+                <!-- 右侧模拟 IDE 窗口 -->
+                <div class="lg:col-span-5">
+                    <div class="bg-gray-900 rounded-lg shadow-2xl overflow-hidden border border-gray-800">
+                        <div class="bg-gray-800 px-4 py-3 flex items-center justify-between border-b border-gray-700">
+                            <div class="flex items-center space-x-2">
+                                <div class="w-3 h-3 rounded-full bg-red-500"></div>
+                                <div class="w-3 h-3 rounded-full bg-yellow-500"></div>
+                                <div class="w-3 h-3 rounded-full bg-green-500"></div>
+                            </div>
+                            <div class="text-xs text-gray-400 font-mono">App.cpp - ToyCode Studio</div>
+                            <div class="text-gray-400 text-xs"><i class="fa-solid fa-code"></i></div>
+                        </div>
+                        <div class="p-5 font-mono text-xs sm:text-sm text-gray-300 overflow-x-auto leading-relaxed">
+                            <span class="text-blue-400">#include</span> <span class="text-green-300">&lt;ToyCode.h&gt;</span><br><br>
+                            <span class="text-purple-400">using namespace</span> toy;<br><br>
+                            <span class="text-purple-400">int</span> <span class="text-yellow-300">main</span>() {<br>
+                            &nbsp;&nbsp;&nbsp;&nbsp;App <span class="text-blue-300">a</span>(<span class="text-green-300">"ToyCode 欢迎您"</span>);<br>
+                            &nbsp;&nbsp;&nbsp;&nbsp;a.Size = {<span class="text-orange-300">1920</span>, <span class="text-orange-300">1080</span>};<br><br>
+                            &nbsp;&nbsp;&nbsp;&nbsp;<span class="text-gray-500">// 极简属性式 UI 组件</span><br>
+                            &nbsp;&nbsp;&nbsp;&nbsp;<span class="text-purple-400">auto</span> btn = a.<span class="text-yellow-300">AddButton</span>(<span class="text-green-300">"开始体验"</span>);<br>
+                            &nbsp;&nbsp;&nbsp;&nbsp;btn.Position = {<span class="text-orange-300">760</span>, <span class="text-orange-300">520</span>};<br>
+                            &nbsp;&nbsp;&nbsp;&nbsp;btn.Click = [](<span class="text-purple-400">auto</span> e) {<br>
+                            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="text-yellow-300">Print</span>(<span class="text-green-300">"Hello ToyCode!"</span>);<br>
+                            &nbsp;&nbsp;&nbsp;&nbsp;};<br><br>
+                            &nbsp;&nbsp;&nbsp;&nbsp;<span class="text-purple-400">return</span> a.<span class="text-yellow-300">Run</span>();<br>
+                            }
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- 核心特性区域 -->
+    <section id="features" class="py-20 bg-white">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="text-center max-w-3xl mx-auto mb-16">
+                <h2 class="text-3xl sm:text-4xl font-bold text-gray-900 tracking-tight">核心特性</h2>
+                <p class="mt-4 text-lg text-gray-600">专为高效开发与流畅体验而设计，摆脱复杂底层，专注于创意实现。</p>
+            </div>
+
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
+                <!-- 特性 1 -->
+                <div class="p-8 bg-gray-50 rounded-lg border border-gray-100 hover:border-blue-200 transition-all hover:shadow-md group">
+                    <div class="w-12 h-12 bg-blue-100 text-microsoft-blue rounded-lg flex items-center justify-center text-xl mb-6 group-hover:bg-microsoft-blue group-hover:text-white transition-colors">
+                        <i class="fa-solid fa-terminal"></i>
+                    </div>
+                    <h3 class="text-xl font-semibold text-gray-900 mb-3">1. 简单直观的 C++ 接口</h3>
+                    <p class="text-gray-600 leading-relaxed">
+                        以 <code>App a;</code> 作为程序统一入口，通过 <code>a.AddButton()</code>、<code>a.AddImage()</code> 等直观接口创建对象。坐标、大小、颜色和文字均采用现代属性式语法，输入对象名称和 <code>.</code> 即可轻松提示并发现常用功能。
+                    </p>
+                </div>
+
+                <!-- 特性 2 -->
+                <div class="p-8 bg-gray-50 rounded-lg border border-gray-100 hover:border-blue-200 transition-all hover:shadow-md group">
+                    <div class="w-12 h-12 bg-blue-100 text-microsoft-blue rounded-lg flex items-center justify-center text-xl mb-6 group-hover:bg-microsoft-blue group-hover:text-white transition-colors">
+                        <i class="fa-solid fa-gamepad"></i>
+                    </div>
+                    <h3 class="text-xl font-semibold text-gray-900 mb-3">2. UI 与游戏开发二合一</h3>
+                    <p class="text-gray-600 leading-relaxed">
+                        内置 <code>Label</code>、<code>Button</code>、<code>TextBox</code>、<code>Image</code>、<code>Grid</code>、<code>StackPanel</code> 等常见界面控件；同时提供精灵动画、粒子特效、音频、动作系统、输入处理和碰撞检测，一套接口无缝兼顾桌面工具与 2D 游戏。
+                    </p>
+                </div>
+
+                <!-- 特性 3 -->
+                <div class="p-8 bg-gray-50 rounded-lg border border-gray-100 hover:border-blue-200 transition-all hover:shadow-md group">
+                    <div class="w-12 h-12 bg-blue-100 text-microsoft-blue rounded-lg flex items-center justify-center text-xl mb-6 group-hover:bg-microsoft-blue group-hover:text-white transition-colors">
+                        <i class="fa-solid fa-shield-halved"></i>
+                    </div>
+                    <h3 class="text-xl font-semibold text-gray-900 mb-3">3. 自动生命周期与资源管理</h3>
+                    <p class="text-gray-600 leading-relaxed">
+                        界面与游戏对象由所属容器统一管理，父对象销毁时子对象自动级联释放。图片、字体与音频资源由引擎统一缓存与清理，无需手动调用 <code>delete</code>、<code>Destroy()</code> 或 <code>Dispose()</code>。
+                    </p>
+                </div>
+
+                <!-- 特性 4 -->
+                <div class="p-8 bg-gray-50 rounded-lg border border-gray-100 hover:border-blue-200 transition-all hover:shadow-md group">
+                    <div class="w-12 h-12 bg-blue-100 text-microsoft-blue rounded-lg flex items-center justify-center text-xl mb-6 group-hover:bg-microsoft-blue group-hover:text-white transition-colors">
+                        <i class="fa-solid fa-globe"></i>
+                    </div>
+                    <h3 class="text-xl font-semibold text-gray-900 mb-3">4. 丰富的跨平台资源能力</h3>
+                    <p class="text-gray-600 leading-relaxed">
+                        全面支持 PNG、JPG、SVG、TTF 字体及 WAV、OGG、MP3 音频。资源既可存放在运行目录也可打包进 ZIP 资源包。以 PC 为起点，并为后续发布至 WebAssembly 网页端及 Android 平台预留跨平台架构。
+                    </p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- 交互式代码沙盒 -->
+    <section id="sandbox" class="py-20 bg-gray-50 border-y border-microsoft-border">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="text-center max-w-3xl mx-auto mb-12">
+                <h2 class="text-3xl sm:text-4xl font-bold text-gray-900 tracking-tight">快速上手代码示例</h2>
+                <p class="mt-4 text-lg text-gray-600">感受 ToyCode 在 UI 界面构建与 2D 游戏角色控制中的极致优雅。</p>
+            </div>
+
+            <!-- 选项卡切换按钮 -->
+            <div class="flex justify-center mb-6">
+                <div class="inline-flex p-1 bg-gray-200 rounded-lg space-x-1">
+                    <button onclick="switchTab('ui')" id="btn-tab-ui" class="px-5 py-2.5 text-sm font-medium rounded-md bg-white text-gray-900 shadow-sm transition-all">
+                        <i class="fa-solid fa-window-maximize mr-2 text-microsoft-blue"></i> 示例 1：UI 界面
+                    </button>
+                    <button onclick="switchTab('game')" id="btn-tab-game" class="px-5 py-2.5 text-sm font-medium rounded-md text-gray-600 hover:text-gray-900 transition-all">
+                        <i class="fa-solid fa-gamepad mr-2 text-microsoft-blue"></i> 示例 2：游戏角色控制
+                    </button>
+                </div>
+            </div>
+
+            <!-- 代码展示卡片 -->
+            <div class="max-w-4xl mx-auto bg-gray-900 rounded-lg shadow-xl overflow-hidden border border-gray-800">
+                <div class="bg-gray-800 px-6 py-3 flex items-center justify-between border-b border-gray-700">
+                    <span id="code-title" class="text-sm font-mono text-gray-300">示例 1：创建简单的 UI 界面</span>
+                    <button onclick="copyCode()" class="text-xs text-gray-400 hover:text-white bg-gray-700 hover:bg-gray-600 px-3 py-1.5 rounded transition-colors flex items-center">
+                        <i class="fa-regular fa-copy mr-1.5"></i> 复制代码
+                    </button>
+                </div>
+                <div class="p-6 font-mono text-xs sm:text-sm text-gray-300 overflow-x-auto leading-relaxed h-[420px]" id="code-container">
+                    <!-- UI 代码默认显示 -->
+                    <pre id="code-content"><span class="text-blue-400">#include</span> <span class="text-green-300">&lt;ToyCode.h&gt;</span>
+
+<span class="text-purple-400">using namespace</span> toy;
+
+<span class="text-purple-400">int</span> <span class="text-yellow-300">main</span>()
+{
+    App <span class="text-blue-300">a</span>(<span class="text-green-300">"ToyCode UI 示例"</span>);
+    a.Size = {<span class="text-orange-300">1920</span>, <span class="text-orange-300">1080</span>};
+
+    <span class="text-purple-400">auto</span> title = a.<span class="text-yellow-300">AddLabel</span>(<span class="text-green-300">"欢迎使用 ToyCode"</span>);
+    title.Position = {<span class="text-orange-300">560</span>, <span class="text-orange-300">180</span>};
+    title.Size = {<span class="text-orange-300">800</span>, <span class="text-orange-300">100</span>};
+    title.FontSize = <span class="text-orange-300">52</span>;
+    title.TextAlign = TextAlign.Center;
+
+    <span class="text-purple-400">auto</span> result = a.<span class="text-yellow-300">AddLabel</span>(<span class="text-green-300">"请点击按钮"</span>);
+    result.Position = {<span class="text-orange-300">710</span>, <span class="text-orange-300">360</span>};
+    result.Size = {<span class="text-orange-300">500</span>, <span class="text-orange-300">80</span>};
+    result.FontSize = <span class="text-orange-300">30</span>;
+    result.TextAlign = TextAlign.Center;
+
+    <span class="text-purple-400">auto</span> button = a.<span class="text-yellow-300">AddButton</span>(<span class="text-green-300">"开始"</span>);
+    button.Position = {<span class="text-orange-300">760</span>, <span class="text-orange-300">520</span>};
+    button.Size = {<span class="text-orange-300">400</span>, <span class="text-orange-300">100</span>};
+    button.CornerRadius = <span class="text-orange-300">24</span>;
+    button.HoverOffset = {<span class="text-orange-300">0</span>, -<span class="text-orange-300">8</span>};
+    button.PressedOffset = {<span class="text-orange-300">2</span>, <span class="text-orange-300">2</span>};
+
+    button.Click = [](<span class="text-purple-400">auto</span> e)
+    {
+        result.Text = <span class="text-green-300">"你好，ToyCode！"</span>;
+    };
+
+    <span class="text-purple-400">return</span> a.<span class="text-yellow-300">Run</span>();
+}</pre>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- 应用场景区域 -->
+    <section id="scenarios" class="py-20 bg-white">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="text-center max-w-3xl mx-auto mb-16">
+                <h2 class="text-3xl sm:text-4xl font-bold text-gray-900 tracking-tight">应用场景</h2>
+                <p class="mt-4 text-lg text-gray-600">无论是日常桌面工具、独立游戏还是多媒体创意作品，ToyCode 都能轻松驾驭。</p>
+            </div>
+
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+                <!-- 场景 1 -->
+                <div class="p-8 bg-gray-50 rounded-lg border border-gray-100">
+                    <div class="w-12 h-12 bg-blue-100 text-microsoft-blue rounded-lg flex items-center justify-center text-xl mb-6">
+                        <i class="fa-solid fa-desktop"></i>
+                    </div>
+                    <h3 class="text-xl font-semibold text-gray-900 mb-3">轻量级桌面程序</h3>
+                    <p class="text-gray-600 leading-relaxed">
+                        利用 <code>Label</code>、<code>Button</code>、<code>TextBox</code>、<code>Image</code>、<code>Grid</code> 和 <code>StackPanel</code> 快速开发计算器、启动器、素材管理器、教学演示程序等小型桌面应用。
+                    </p>
+                </div>
+
+                <!-- 场景 2 -->
+                <div class="p-8 bg-gray-50 rounded-lg border border-gray-100">
+                    <div class="w-12 h-12 bg-blue-100 text-microsoft-blue rounded-lg flex items-center justify-center text-xl mb-6">
+                        <i class="fa-solid fa-ghost"></i>
+                    </div>
+                    <h3 class="text-xl font-semibold text-gray-900 mb-3">2D 独立游戏</h3>
+                    <p class="text-gray-600 leading-relaxed">
+                        依托精灵动画、键鼠输入、音乐音效、粒子系统与碰撞检测，独立制作平台跳跃、射击、解谜、角色扮演等 2D 游戏。
+                    </p>
+                </div>
+
+                <!-- 场景 3 -->
+                <div class="p-8 bg-gray-50 rounded-lg border border-gray-100">
+                    <div class="w-12 h-12 bg-blue-100 text-microsoft-blue rounded-lg flex items-center justify-center text-xl mb-6">
+                        <i class="fa-solid fa-wand-magic-sparkles"></i>
+                    </div>
+                    <h3 class="text-xl font-semibold text-gray-900 mb-3">交互式创意作品</h3>
+                    <p class="text-gray-600 leading-relaxed">
+                        结合 SVG、字体图标、富文本、动画和音频，打造电子绘本、互动课件、小游戏合集等多媒体创意作品。
+                    </p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- 开发环境与部署指南 -->
+    <section id="docs" class="py-20 bg-gray-50 border-t border-microsoft-border">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="text-center max-w-3xl mx-auto mb-16">
+                <h2 class="text-3xl sm:text-4xl font-bold text-gray-900 tracking-tight">开发环境与部署指南</h2>
+                <p class="mt-4 text-lg text-gray-600">极简配置，开箱即用，全面支持主流开发环境与跨平台部署。</p>
+            </div>
+
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-8 max-w-5xl mx-auto">
+                <div class="bg-white p-8 rounded-lg border border-gray-200 shadow-sm space-y-4">
+                    <h3 class="text-xl font-semibold text-gray-900 flex items-center">
+                        <i class="fa-solid fa-screwdriver-wrench text-microsoft-blue mr-3"></i> 开发配置
+                    </h3>
+                    <ul class="space-y-3 text-gray-600 text-sm">
+                        <li class="flex items-start">
+                            <i class="fa-solid fa-check text-green-600 mt-1 mr-2.5"></i>
+                            <span><strong>推荐开发环境</strong>：Visual Studio 2026、C++17 标准</span>
+                        </li>
+                        <li class="flex items-start">
+                            <i class="fa-solid fa-check text-green-600 mt-1 mr-2.5"></i>
+                            <span><strong>SDK 安装</strong>：下载 ToyCode SDK，将头文件、导入库和运行时 DLL 添加到您的 Visual Studio 项目中。</span>
+                        </li>
+                        <li class="flex items-start">
+                            <i class="fa-solid fa-check text-green-600 mt-1 mr-2.5"></i>
+                            <span><strong>头文件引入</strong>：<code>#include &lt;ToyCode.h&gt;</code> 搭配 <code>using namespace toy;</code></span>
+                        </li>
+                        <li class="flex items-start">
+                            <i class="fa-solid fa-check text-green-600 mt-1 mr-2.5"></i>
+                            <span><strong>计划支持平台</strong>：Windows、Linux、macOS、WebAssembly、Android</span>
+                        </li>
+                    </ul>
+                </div>
+
+                <div class="bg-white p-8 rounded-lg border border-gray-200 shadow-sm space-y-4" id="download">
+                    <h3 class="text-xl font-semibold text-gray-900 flex items-center">
+                        <i class="fa-solid fa-box-archive text-microsoft-blue mr-3"></i> 运行时依赖结构
+                    </h3>
+                    <p class="text-sm text-gray-600">Windows 发布目录结构示例：</p>
+                    <div class="bg-gray-900 text-gray-200 p-4 rounded font-mono text-xs space-y-1">
+                        <div>Game.exe</div>
+                        <div>ToyCode.dll</div>
+                        <div class="text-gray-400">assets.zip (或资源文件夹)</div>
+                    </div>
+                    <div class="pt-2">
+                        <a href="#" class="inline-flex items-center justify-center w-full px-4 py-2.5 bg-microsoft-blue hover:bg-microsoft-blueHover text-white font-medium rounded text-sm transition-colors shadow-sm">
+                            <i class="fa-solid fa-download mr-2"></i> 下载 ToyCode SDK v1.0
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- 页脚 -->
+    <footer class="bg-white border-t border-microsoft-border py-12 text-center text-sm text-gray-500">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 space-y-4">
+            <div class="flex items-center justify-center space-x-2">
+                <div class="w-6 h-6 bg-microsoft-blue rounded flex items-center justify-center text-white font-bold text-xs">T</div>
+                <span class="font-semibold text-gray-800">ToyCode Engine</span>
+            </div>
+            <p>&copy; 2026 ToyCode Project. Designed for C++ Beginners and Indie Creators.</p>
+        </div>
+    </footer>
+
+    <!-- JavaScript 交互脚本 -->
+    <script>
+        const codeUI = `<span class="text-blue-400">#include</span> <span class="text-green-300">&lt;ToyCode.h&gt;</span>
+
+<span class="text-purple-400">using namespace</span> toy;
+
+<span class="text-purple-400">int</span> <span class="text-yellow-300">main</span>()
+{
+    App <span class="text-blue-300">a</span>(<span class="text-green-300">"ToyCode UI 示例"</span>);
+    a.Size = {<span class="text-orange-300">1920</span>, <span class="text-orange-300">1080</span>};
+
+    <span class="text-purple-400">auto</span> title = a.<span class="text-yellow-300">AddLabel</span>(<span class="text-green-300">"欢迎使用 ToyCode"</span>);
+    title.Position = {<span class="text-orange-300">560</span>, <span class="text-orange-300">180</span>};
+    title.Size = {<span class="text-orange-300">800</span>, <span class="text-orange-300">100</span>};
+    title.FontSize = <span class="text-orange-300">52</span>;
+    title.TextAlign = TextAlign.Center;
+
+    <span class="text-purple-400">auto</span> result = a.<span class="text-yellow-300">AddLabel</span>(<span class="text-green-300">"请点击按钮"</span>);
+    result.Position = {<span class="text-orange-300">710</span>, <span class="text-orange-300">360</span>};
+    result.Size = {<span class="text-orange-300">500</span>, <span class="text-orange-300">80</span>};
+    result.FontSize = <span class="text-orange-300">30</span>;
+    result.TextAlign = TextAlign.Center;
+
+    <span class="text-purple-400">auto</span> button = a.<span class="text-yellow-300">AddButton</span>(<span class="text-green-300">"开始"</span>);
+    button.Position = {<span class="text-orange-300">760</span>, <span class="text-orange-300">520</span>};
+    button.Size = {<span class="text-orange-300">400</span>, <span class="text-orange-300">100</span>};
+    button.CornerRadius = <span class="text-orange-300">24</span>;
+    button.HoverOffset = {<span class="text-orange-300">0</span>, -<span class="text-orange-300">8</span>};
+    button.PressedOffset = {<span class="text-orange-300">2</span>, <span class="text-orange-300">2</span>};
+
+    button.Click = [](<span class="text-purple-400">auto</span> e)
+    {
+        result.Text = <span class="text-green-300">"你好，ToyCode！"</span>;
+    };
+
+    <span class="text-purple-400">return</span> a.<span class="text-yellow-300">Run</span>();
+}`;
+
+        const codeGame = `<span class="text-blue-400">#include</span> <span class="text-green-300">&lt;ToyCode.h&gt;</span>
+
+<span class="text-purple-400">using namespace</span> toy;
+
+<span class="text-purple-400">int</span> <span class="text-yellow-300">main</span>()
+{
+    App <span class="text-blue-300">a</span>(<span class="text-green-300">"ToyCode 游戏示例"</span>);
+    a.Size = {<span class="text-orange-300">1920</span>, <span class="text-orange-300">1080</span>};
+
+    <span class="text-purple-400">auto</span> knight = a.<span class="text-yellow-300">AddSprite</span>(<span class="text-green-300">"knight.png"</span>);
+    knight.Position = {<span class="text-orange-300">860</span>, <span class="text-orange-300">700</span>};
+
+    knight.<span class="text-yellow-300">AddAnimation</span>(<span class="text-green-300">"idle"</span>, {<span class="text-orange-300">0</span>, <span class="text-orange-300">1</span>, <span class="text-orange-300">2</span>, <span class="text-orange-300">3</span>}, <span class="text-orange-300">8</span>);
+    knight.<span class="text-yellow-300">AddAnimation</span>(<span class="text-green-300">"walk"</span>, {<span class="text-orange-300">4</span>, <span class="text-orange-300">5</span>, <span class="text-orange-300">6</span>, <span class="text-orange-300">7</span>, <span class="text-orange-300">8</span>, <span class="text-orange-300">9</span>}, <span class="text-orange-300">12</span>);
+    knight.<span class="text-yellow-300">Play</span>(<span class="text-green-300">"idle"</span>);
+
+    a.Update = [](<span class="text-purple-400">auto</span> e)
+    {
+        <span class="text-purple-400">if</span> (a.Keys.Down(Keys.Left))
+        {
+            knight.Position.X -= <span class="text-orange-300">300</span> * e.DeltaTime;
+            knight.<span class="text-yellow-300">Play</span>(<span class="text-green-300">"walk"</span>);
+        }
+        <span class="text-purple-400">else if</span> (a.Keys.Down(Keys.Right))
+        {
+            knight.Position.X += <span class="text-orange-300">300</span> * e.DeltaTime;
+            knight.<span class="text-yellow-300">Play</span>(<span class="text-green-300">"walk"</span>);
+        }
+        <span class="text-purple-400">else</span>
+        {
+            knight.<span class="text-yellow-300">Play</span>(<span class="text-green-300">"idle"</span>);
+        }
+    };
+
+    <span class="text-purple-400">return</span> a.<span class="text-yellow-300">Run</span>();
+}`;
+
+        function switchTab(type) {
+            const btnUI = document.getElementById('btn-tab-ui');
+            const btnGame = document.getElementById('btn-tab-game');
+            const codeContent = document.getElementById('code-content');
+            const codeTitle = document.getElementById('code-title');
+
+            if (type === 'ui') {
+                btnUI.className = "px-5 py-2.5 text-sm font-medium rounded-md bg-white text-gray-900 shadow-sm transition-all";
+                btnGame.className = "px-5 py-2.5 text-sm font-medium rounded-md text-gray-600 hover:text-gray-900 transition-all";
+                codeContent.innerHTML = codeUI;
+                codeTitle.innerText = "示例 1：创建简单的 UI 界面";
+            } else {
+                btnGame.className = "px-5 py-2.5 text-sm font-medium rounded-md bg-white text-gray-900 shadow-sm transition-all";
+                btnUI.className = "px-5 py-2.5 text-sm font-medium rounded-md text-gray-600 hover:text-gray-900 transition-all";
+                codeContent.innerHTML = codeGame;
+                codeTitle.innerText = "示例 2：创建可控制的游戏角色（精灵动画）";
+            }
+        }
+
+        function copyCode() {
+            const codeText = document.getElementById('code-content').innerText;
+            navigator.clipboard.writeText(codeText).then(() => {
+                alert("代码已成功复制到剪贴板！");
+            });
+        }
+    </script>
+</body>
+</html>
