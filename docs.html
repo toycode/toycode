@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>ToyCode 2.0.5 官方使用教程与接口全景手册 (详尽无删减版)</title>
+    <title>ToyCode 2.0.5 官方使用教程与接口全景手册 (2-28章)</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <style>
@@ -18,7 +18,7 @@
         <div class="flex items-center space-x-6">
             <a href="index.html" class="flex items-center space-x-3">
                 <div class="w-8 h-8 bg-blue-600 rounded flex items-center justify-center text-white font-bold">T</div>
-                <span class="text-lg font-semibold text-gray-900">ToyCode <span class="text-xs px-2 py-0.5 bg-blue-50 text-blue-600 rounded font-mono">v2.0.5 完整详尽版</span></span>
+                <span class="text-lg font-semibold text-gray-900">ToyCode <span class="text-xs px-2 py-0.5 bg-blue-50 text-blue-600 rounded font-mono">v2.0.5 教程 (2-28章)</span></span>
             </a>
         </div>
         <div class="flex items-center space-x-4">
@@ -29,9 +29,8 @@
 
     <div class="flex-1 flex overflow-hidden">
         <aside class="w-80 bg-gray-50 border-r border-gray-200 overflow-y-auto p-4 space-y-4 hidden lg:block flex-shrink-0">
-            <p class="px-3 text-xs font-semibold uppercase tracking-wider text-gray-400">目录导航 (1-28章)</p>
+            <p class="px-3 text-xs font-semibold uppercase tracking-wider text-gray-400">目录导航 (2-28章)</p>
             <div class="space-y-1 text-sm">
-                <a href="#sec-1" class="block px-3 py-1.5 rounded text-gray-700 hover:bg-gray-200">1. 环境与项目配置</a>
                 <a href="#sec-2" class="block px-3 py-1.5 rounded text-gray-700 hover:bg-gray-200">2. 快速上手</a>
                 <a href="#sec-3" class="block px-3 py-1.5 rounded text-gray-700 hover:bg-gray-200">3. Getter Setter 与链式配置</a>
                 <a href="#sec-4" class="block px-3 py-2 text-sm font-medium rounded-md text-gray-700 hover:bg-gray-200">4. 对象树和自动内存管理</a>
@@ -65,109 +64,9 @@
         <main class="flex-1 overflow-y-auto p-8 lg:p-12 max-w-4xl mx-auto space-y-16">
             <div class="border-b pb-8 space-y-4">
                 <span class="text-xs font-semibold text-blue-600 uppercase tracking-wider">ToyCode 2.0.5 官方使用教程</span>
-                <h1 class="text-4xl font-bold text-gray-900">ToyCode 2.0.5 接口全景手册与详尽教程 (1-28章)</h1>
-                <p class="text-lg text-gray-600">本页面包含第 1 章至第 28 章的完整详细描述、所有底层原理解释、属性对照表以及完整 C++17 代码。绝不精简，绝不省略任何段落与说明。</p>
+                <h1 class="text-4xl font-bold text-gray-900">ToyCode 2.0.5 接口全景手册与详尽教程 (第 2 至 28 章)</h1>
+                <p class="text-lg text-gray-600">本页面包含第 2 章至第 28 章的完整详细描述、所有底层原理解释、属性对照表以及完整 C++17 代码。已按要求移除第 1 章，直接从快速上手开始。</p>
             </div>
-
-            <!-- SECTION 1 -->
-            <section id="sec-1" class="space-y-6">
-                <h2 class="text-2xl font-bold text-gray-900 border-b pb-2">1. 环境与项目配置</h2>
-                <h3 class="text-xl font-semibold text-gray-800">1.1 推荐目录结构</h3>
-                <p class="text-gray-700 leading-relaxed">
-                    在开始使用 ToyCode 2.0.5 开发桌面应用或 2D 游戏之前，建议采用标准清晰的 Solution 目录结构。这样可以确保 DLL 导出库、主游戏项目以及第三方依赖库（如 SDL3、SDL3_ttf、ThorVG、stb、dr_libs）能够被正确引用和链接。
-                </p>
-                <div class="bg-gray-900 rounded-lg p-4 font-mono text-xs text-gray-200">
-                    <pre>ToyCode/
-├─ ToyCode.slnx
-├─ ToyCodeDll/
-│  ├─ ToyCode.h
-│  ├─ ToyCodeApi.h
-│  ├─ ToyCode.cpp
-│  └─ ToyCodeDll.vcxproj
-├─ Game/
-│  ├─ Game.cpp
-│  └─ Game.vcxproj
-├─ LIB/
-│  ├─ SDL3/
-│  ├─ SDL3_ttf/
-│  ├─ ThorVG/
-│  ├─ stb/
-│  └─ dr_libs/
-└─ x64/
-   ├─ Debug/
-   └─ Release/</pre>
-                </div>
-                <p class="text-gray-700 leading-relaxed">
-                    ToyCodeDll 项目负责生成 <code>ToyCode.dll</code> 动态库文件和 <code>ToyCode.lib</code> 导入库文件；Game 项目作为您的具体应用程序（EXE），它需要引用 ToyCodeDll 并链接 <code>ToyCode.lib</code>。在最终运行目录（x64/Debug 或 x64/Release）中，必须包含 <code>ToyCode.dll</code>、<code>SDL3.dll</code>、<code>SDL3_ttf.dll</code> 以及所需的字体和音效等测试资源。
-                </p>
-
-                <h3 class="text-xl font-semibold text-gray-800">1.2 Visual Studio 关键设置</h3>
-                <p class="text-gray-700 leading-relaxed">
-                    为了保证 C++17 特性的正常编译以及中文字符在源码中的完美显示，请在 Visual Studio 2026 / 2022 中对项目进行如下关键配置：
-                </p>
-                <div class="overflow-x-auto">
-                    <table class="min-w-full border border-gray-200 text-sm">
-                        <thead class="bg-gray-100">
-                            <tr>
-                                <th class="border px-4 py-2 text-left">项目</th>
-                                <th class="border px-4 py-2 text-left">设置项</th>
-                                <th class="border px-4 py-2 text-left">建议值 / 操作路径</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            <tr>
-                                <td class="border px-4 py-2">ToyCodeDll</td>
-                                <td class="border px-4 py-2">配置类型</td>
-                                <td class="border px-4 py-2">动态库 (.dll)</td>
-                            </tr>
-                            <tr class="bg-gray-50">
-                                <td class="border px-4 py-2">Game</td>
-                                <td class="border px-4 py-2">配置类型</td>
-                                <td class="border px-4 py-2">应用程序 (.exe)</td>
-                            </tr>
-                            <tr>
-                                <td class="border px-4 py-2">所有项目</td>
-                                <td class="border px-4 py-2">C++ 语言标准</td>
-                                <td class="border px-4 py-2">ISO C++17 标准 (/std:c++17)</td>
-                            </tr>
-                            <tr class="bg-gray-50">
-                                <td class="border px-4 py-2">所有项目</td>
-                                <td class="border px-4 py-2">高级 -> 源字符集</td>
-                                <td class="border px-4 py-2">UTF-8 (/utf-8) 确保中文不乱码</td>
-                            </tr>
-                            <tr>
-                                <td class="border px-4 py-2">Game 项目</td>
-                                <td class="border px-4 py-2">C/C++ -> 常规 -> 附加包含目录</td>
-                                <td class="border px-4 py-2">$(SolutionDir)ToyCodeDll</td>
-                            </tr>
-                            <tr class="bg-gray-50">
-                                <td class="border px-4 py-2">Game 项目</td>
-                                <td class="border px-4 py-2">链接器 -> 常规 -> 附加库目录</td>
-                                <td class="border px-4 py-2">$(SolutionDir)x64\$(Configuration)</td>
-                            </tr>
-                            <tr>
-                                <td class="border px-4 py-2">Game 项目</td>
-                                <td class="border px-4 py-2">链接器 -> 输入 -> 附加依赖项</td>
-                                <td class="border px-4 py-2">ToyCode.lib</td>
-                            </tr>
-                        </tbody>
-                    </table>
-                </div>
-
-                <h3 class="text-xl font-semibold text-gray-800">1.3 最小源文件</h3>
-                <p class="text-gray-700 leading-relaxed">
-                    完成上述配置后，您可以编写以下最简源文件来验证环境是否搭建成功。这段代码会启动一个包含默认标题和标准窗口的应用程序实例。
-                </p>
-                <div class="bg-gray-900 rounded-lg p-4 font-mono text-xs sm:text-sm text-gray-200">
-                    <pre><span class="text-blue-400">#include</span> <span class="text-green-300">&lt;ToyCode.h&gt;</span>
-<span class="text-purple-400">using namespace</span> toy;
-<span class="text-purple-400">int</span> <span class="text-yellow-300">main</span>()
-{
-    App <span class="text-blue-300">a</span>(<span class="text-green-300">"我的 ToyCode 程序"</span>);
-    <span class="text-purple-400">return</span> a.<span class="text-yellow-300">Run</span>();
-}</pre>
-                </div>
-            </section>
 
             <!-- SECTION 2 -->
             <section id="sec-2" class="space-y-6">
@@ -635,7 +534,7 @@ a.Debug.ShowInTitle(<span class="text-purple-400">true</span>);</pre>
 
             <div class="border-t pt-8 flex justify-between items-center text-sm">
                 <a href="index.html" class="text-blue-600 hover:underline font-medium">&larr; 返回官网首页</a>
-                <span class="text-gray-400">ToyCode v2.0.5 Documentation (1-28 Chapters Complete Edition)</span>
+                <span class="text-gray-400">ToyCode v2.0.5 Documentation (Chapters 2-28 Complete Edition)</span>
             </div>
         </main>
     </div>
